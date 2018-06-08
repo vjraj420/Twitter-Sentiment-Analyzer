@@ -7,25 +7,22 @@ import matplotlib.pyplot as plt
 def percentage(part,whole):
     return 100 * float(part)/float(whole)
 
-
+# required credentials for accessing tweets
 consumerKey = "<Your consumer key>"
 consumerSecret = "<your consumer secret key>"
 accessToken = "<your access token>"
 accessTokenSecret = "<your access token secret>"
 
+# authorization
 auth= tweepy.OAuthHandler(consumerKey,consumerSecret)
 auth.set_access_token(accessToken, accessTokenSecret)
 api = tweepy.API(auth)
 
-
-
-
+# Enter keyword/hashtag and number of tweets to analyze
 searchTerm = input("Enter keyword/hashtag to search about:")
 noOfSearchTerms = int(input("Enter how many tweets to analyze:"))
 
 tweets = tweepy.Cursor(api.search, q=searchTerm).items(noOfSearchTerms)
-
-
 
 positive = 0
 negative = 0
@@ -55,13 +52,15 @@ neutral = format (neutral, '.2f')
 
 print("How people are reacting on" +searchTerm + "by analyzing " +str(noOfSearchTerms) + "Tweets.")
 
+# Analyze the Polarity
 if (polarity == 0):
-    print("Neautral")
+    print("Neutral")
 elif(polarity<0):
     print("Negative")
 elif(polarity>0):
     print("Positive")
 
+# Plot the pie diagram and differentiate weather it is Postitve or Negative or Neutral    
 labels = ['Positive['+str(positive)+'%]','Neutral['+str(neutral)+'%]','Negative['+str(negative)+'%]']
 sizes = [positive, neutral, negative]
 colors = ['yellowgreen', 'gold', 'red']
